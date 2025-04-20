@@ -9,12 +9,13 @@
 #ifndef ESP32EncoderAdapter_h
 #define ESP32EncoderAdapter_h
 
-#define ESP32Encoder_h_
+// #define ESP32Encoder_h_
 
 // Only create the adapter class if ESP32 Encoder is already included.
-#ifdef ESP32Encoder_h_
+// #ifdef ESP32Encoder_h_
 
-#include <ESP32Encoder.h> // https://github.com/madhephaestus/ESP32Encoder.git 
+// #include <ESP32Encoder.h> // https://github.com/madhephaestus/ESP32Encoder.git 
+#include <EncoderAdapter.h>
 
 /**
  * @brief An adapter for Kevin Harringtons ESP32 Encoder.
@@ -60,9 +61,9 @@ public:
         //encoder->begin(pinA, pinB);
         // encoder = new Encoder(pinA, pinB); 
         ESP32Encoder::useInternalWeakPullResistors = puType::up;
-        encoder.attachFullQuad( pinA, pinB );
-        encoder.setFilter(1023);
-        encoder.setCount ( 0 );
+        encoder->attachFullQuad( pinA, pinB );
+        encoder->setFilter(1023);
+        encoder->setCount ( 0 );
         return true;
     }
 
@@ -79,7 +80,8 @@ public:
         //         oldCounts = counts;
         //     }
         // }
-        return encoder->getCount() / enc_div;
+        // return encoder->getCount() / enc_div;
+        return encoder->getCount();
     }
 
     /**
@@ -88,13 +90,14 @@ public:
      * @param pos The desired new position.
      */
     void setPosition(int32_t pos) {
-        encoder->setCount(pos * enc_div);
+        // encoder->setCount(pos * enc_div);
+        encoder->setCount(pos);
     }
 
 private:
 
 
-    Encoder *encoder;
+    ESP32Encoder *encoder;
 
     uint8_t pinA;
     uint8_t pinB;
@@ -110,4 +113,4 @@ private:
 
 
 #endif
-#endif
+// #endif
